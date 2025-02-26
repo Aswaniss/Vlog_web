@@ -1,0 +1,64 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>POST A VLOG</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{% url 'vlog_post' %}">Post Vlog</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vlog Posting Form -->
+<section class="vlog_posting_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="blog_form_inner">
+                    <h3>Share Your Vlog</h3>
+                    <form class="row blog_form" action="{% url 'vlog_post' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" name="title" placeholder="Title" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <textarea class="form-control" name="description" placeholder="Description" rows="6" required></textarea>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="category">Select Category:</label>
+                            <select class="form-control" name="category" id="category" required>
+                                <option value="" disabled selected>Select a category</option>
+                                <option value="travel">Travel</option>
+                                <option value="food">Food</option>
+                                <option value="lifestyle">Lifestyle</option>
+                                <option value="technology">Technology</option>
+                                <option value="others">Others</option>
+                            </select>
+                            
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="images">Upload Images (Optional):</label>
+                            <input type="file" class="form-control" name="images" accept="image/*" multiple>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="video">Upload Video (Optional):</label>
+                            <input type="file" class="form-control" name="video" accept="video/*">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="primary-btn">Post Vlog</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

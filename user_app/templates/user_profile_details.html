@@ -1,0 +1,214 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>YOUR PROFILE</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Profile</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Details Area -->
+<section class="profile_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="profile_details_card">
+                    <h3 class="text-center mb-4">YOUR PROFILE DETAILS</h3>
+                    
+                    {% for i in s %}
+                    <div class="profile-card text-center shadow p-4 rounded">
+                        <!-- Profile Picture -->
+                        <div class="profile-picture mb-4">
+                            {% if i.profile_picture %}
+                            <img src="{{ i.profile_picture.url }}" alt="Profile Picture" class="rounded-circle shadow" style="width: 150px; height: 150px;">
+                            {% else %}
+                            <img src="/static/images/default-profile.png" alt="Default Profile Picture" class="rounded-circle shadow" style="width: 150px; height: 150px;">
+                            {% endif %}
+                        </div>
+
+                        <!-- Profile Information -->
+                        <div class="profile-info">
+                            <p><strong>First Name:</strong> {{ i.firstname }}</p>
+                            <p><strong>Last Name:</strong> {{ i.lastname }}</p>
+                            <p><strong>Username:</strong> {{ i.username }}</p>
+                            <p><strong>Email:</strong> {{ i.email }}</p>
+                            <p><strong>Phone:</strong> {{ i.phone }}</p>
+                            <p><strong>Password: </strong>{{ i.password }}</p>
+                        </div>
+
+                        <!-- Update Button -->
+                        <div class="text-center mt-4">
+                            <a href="{% url 'profile_update' i.id %}" class="btn btn-primary btn-block">Update Profile</a>
+                        </div>
+                    </div>
+
+                    <div class="saved-posts-section text-center mt-5">
+                        <a href="{% url 'view_saved_posts' %}" class="saved-posts-link">
+                            <div class="saved-posts-box d-flex align-items-center justify-content-center">
+                                <h6 class="saved-posts-text">YOUR SAVED POSTS</h6>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+        .saved-posts-list {
+            list-style: none;
+            padding: 0;
+        }
+        .saved-post {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .saved-post a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .saved-post a:hover {
+            color: #007bff;
+        }
+   
+    /* General Section Styles */
+    .profile_box_area {
+        background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+        padding: 60px 0;
+    }
+    .profile_details_card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .profile_details_card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Profile Card Styles */
+    .profile-card {
+        background: #f9f9f9;
+        padding: 30px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .profile-card p {
+        font-size: 16px;
+        color: #555;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    /* Profile Picture */
+    .profile-picture {
+        margin-bottom: 20px;
+    }
+    .profile-picture img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        
+        transition: border-color 0.3s ease;
+    }
+    .profile-picture img:hover {
+        border-color: rgb(0, 179, 155);
+    }
+
+    /* Update Button */
+    .btn-primary {
+        background-color: rgb(243, 164, 18);
+        border: none;
+        padding: 12px 25px;
+        font-size: 16px;
+        color: #fff;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(243, 164, 18, 0.3);
+    }
+    .btn-primary:hover {
+        background-color: rgb(0, 179, 155);
+        box-shadow: 0 6px 12px rgba(0, 179, 155, 0.4);
+    }
+
+    /* Typography */
+    h3.text-center {
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: rgb(19, 18, 17);
+        margin-bottom: 20px;
+    }
+    p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        color: #444;
+    }
+    .saved-posts-section {
+        padding: 20px 0;
+    }
+
+    .saved-posts-link {
+        text-decoration: none;
+    }
+
+    .saved-posts-box {
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        padding: 20px 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .saved-posts-box:hover {
+        background-color: rgb(243, 164, 18);
+        box-shadow: 0 6px 12px rgba(243, 164, 18, 0.3);
+        transform: scale(1.05);
+    }
+
+    .saved-posts-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .saved-posts-text {
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+        transition: color 0.3s ease;
+    }
+
+    .saved-posts-box:hover .saved-posts-text {
+        color: #fff}
+
+</style>
+
+
+{% endblock %}

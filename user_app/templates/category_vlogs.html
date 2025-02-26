@@ -1,0 +1,131 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Section -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1><strong>EXPLORE {{ category.name|upper }} VLOGS</strong></h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">{{ category.name }}</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Listing Section -->
+<section class="blog_area" style="background: #fefefe; padding: 3rem 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="blog_left_sidebar">
+                    {% if vlogs %}
+                        {% for vlog in vlogs %}
+                        <article class="blog_card" style="background: #fff; border: 1px solid #ffe5cc; border-radius: 10px; margin-bottom: 2rem; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;">
+                            <!-- Media Section -->
+                            <div class="blog_media" style="height: 300px; overflow: hidden;">
+                                {% if vlog.video %}
+                                <video controls style="width: 100%; height: 100%; object-fit: cover;">
+                                    <source src="{{ vlog.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                {% elif vlog.images.exists %}
+                                <img src="{{ vlog.images.first.image.url }}" alt="{{ vlog.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                <div style="background: #fff0e0; display: flex; align-items: center; justify-content: center; height: 100%;">
+                                    <p style="color: #ff7b00; font-style: italic;">No Media</p>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Blog Details -->
+                            <div class="blog_details p-4">
+                                <h2 style="font-size: 1.4rem; font-weight: bold; color: #333; margin-bottom: 0.5rem;">
+                                    {{ vlog.title }}
+                                </h2>
+                                <p style="color: #666; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;">
+                                    {{ vlog.description|truncatewords:20 }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="meta_info" style="font-size: 0.85rem; color: #888;">
+                                        <i class="lnr lnr-calendar-full"></i> {{ vlog.created_at|date:"d M, Y" }} |
+                                        <i class="lnr lnr-user"></i> {{ vlog.fname }}
+                                    </div>
+                                    <a href="{% url 'detailed_social_vlog' vlog.id %}" class="btn btn-sm btn-primary"
+                                       style="background-color: #ff7b00; border: none; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; color: #fff;">
+                                        View More
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    {% else %}
+                    <p class="text-center" style="color: #666; font-size: 1rem;">No vlogs available at the moment. Check back later!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+<!-- Styles -->
+<style>
+    /* Blog Card Hover Effect */
+    .blog_card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .blog_card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Button Hover */
+    .btn-primary:hover {
+        background-color: #e56a00;
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Banner Style */
+    .banner-area {
+        text-align: center;
+        padding: 3rem 0;
+        background: rgb(207, 167, 129);
+    }
+
+    .banner-area h1 {
+        font-size: 3rem;
+        color: #fff;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Blog Area Background */
+    .blog_area {
+        padding: 3rem 0;
+        background: #fefefe;
+    }
+
+    /* Explore Vlogs Section */
+    section h2 {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .banner-area h1 {
+            font-size: 2.2rem;
+        }
+
+        .blog_details h2 {
+            font-size: 1.2rem;
+        }
+    }
+</style>

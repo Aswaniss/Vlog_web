@@ -1,0 +1,117 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>{{ profile_user.username }}'s PROFILE</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{% url 'vlog_post' %}">Post Vlog</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br><br>
+
+<div class="container">
+    <div class="profile-header text-center">
+        <img src="{{ profile_user.profile_picture.url }}" alt="Profile Picture" class="rounded-circle" width="150">
+        <h2>{{ profile_user.firstname }} {{ profile_user.lastname }}</h2>
+        <p>@{{ profile_user.username }}</p>
+
+        <!-- Followers & Following Count -->
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'followers_list' profile_user.username %}" class="mr-4" style="text-decoration: none; color: black;">
+                <strong id="followers-count">{{ followers_count }}</strong> Followers
+            </a>
+            <a href="{% url 'following_list' profile_user.username %}" style="text-decoration: none; color: black;">
+                <strong>{{ following_count }}</strong> Following
+            </a>
+        </div><br>
+
+        <!-- Follow/Unfollow Button -->
+        {% if request.session.username != profile_user.username %}
+            <form id="follow-form" action="{% url 'follow_unfollow' profile_user.username %}" method="POST">
+                {% csrf_token %}
+                {% if is_following %}
+                    <button type="submit" class="btn btn-danger">Unfollow</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Follow</button>
+                {% endif %}
+            </form> 
+        {% endif %}
+    </div>
+
+    <h3 class="mt-4">User's Vlogs</h3>
+    <div class="row">
+        {% for vlog in vlogs %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    {% if vlog.video %}
+                        <video controls class="card-img-top">
+                            <source src="{{ vlog.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% elif vlog.images.all %}
+                        <img src="{{ vlog.images.first.image.url }}" alt="{{ vlog.title }}" class="card-img-top">
+                    {% else %}
+                        <div class="text-center py-5">No Media</div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vlog.title }}</h5>
+                        <p class="card-text">{{ vlog.description|truncatewords:20 }}</p>
+                        <a href="{% url 'detailed_social_vlog' vlog.id %}" class="btn btn-sm btn-info">View More</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center col-12">No vlogs posted by this user.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- JavaScript for AJAX -->
+<script>
+$(document).ready(function() {
+    $('#follow-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent the form from submitting the traditional way
+
+        var form = $(this);
+        var url = form.attr('action');
+        var method = form.attr('method');
+        var data = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function(response) {
+                // Update the follower count
+                $('#followers-count').text(response.followers_count);
+
+                // Change the button text and class based on the action
+                var button = form.find('button');
+                if (response.action === 'followed') {
+                    button.text('Unfollow').removeClass('btn-primary').addClass('btn-danger');
+                } else {
+                    button.text('Follow').removeClass('btn-danger').addClass('btn-primary');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

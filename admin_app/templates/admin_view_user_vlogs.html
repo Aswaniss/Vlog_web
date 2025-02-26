@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> {{ user.username }}'s Vlogs</h4>
+
+    {% if vlogs_with_comments %}
+        {% for vlog_data in vlogs_with_comments %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>{{ vlog_data.vlog.title }}</h5>
+                    <p><strong>Likes:</strong> {{ vlog_data.vlog.like_set.count }}</p>  <!-- Display like count -->
+                </div>
+                <div class="card-body">
+                    <p>{{ vlog_data.vlog.description }}</p>
+
+                    <!-- Loop through all images and display them -->
+                    {% if vlog_data.vlog.images.all %}
+                        {% for image in vlog_data.vlog.images.all %}
+                            <img src="{{ image.image.url }}" alt="Vlog Image" style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+                        {% endfor %}
+                    {% else %}
+                        <p>No images available for this vlog.</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <h6>Comments:</h6>
+                    {% if vlog_data.comments %}
+                        <ul>
+                            {% for comment in vlog_data.comments %}
+                                <li><strong>{{ comment.name }}:</strong> {{ comment.message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No comments on this vlog.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>This user has not posted any vlogs yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

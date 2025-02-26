@@ -1,0 +1,53 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Your Liked Posts</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{% url 'liked_posts' %}">Liked Posts</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Liked Posts Section -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Your Liked Vlogs 🎥</h2>
+
+    {% if liked_vlogs %}
+        <div class="row">
+            {% for vlog in liked_vlogs %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0 rounded-lg">
+                        <a href="{% url 'detailed_social_vlog' vlog.id %}">
+                            <img src="{{ vlog.images.first.image.url }}" class="card-img-top rounded-top" alt="{{ vlog.title }}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'detailed_social_vlog' vlog.id %}" class="text-dark text-decoration-none">
+                                    {{ vlog.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted">
+                                {{ vlog.description|truncatewords:20 }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white text-center">
+                            <a href="{% url 'detailed_social_vlog' vlog.id %}" class="btn btn-primary btn-sm">View Vlog</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">You haven't liked any vlogs yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

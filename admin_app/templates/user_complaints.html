@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <center><h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> USERS COMPLAINTS</h4></center>
+  
+    <!-- Simplified Table -->
+    <div class="card">
+      <h5 class="card-header"></h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+           
+<h3>All Complaints</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.user.username }}</td>
+            <td>{{ complaint.subject }}</td>
+            <td>{{ complaint.message }}</td>
+            <td>{{ complaint.is_resolved|yesno:"Resolved,Pending" }}</td>
+            <td>{{ complaint.created_at }}</td>
+            <td>
+            <a href="{% url 'admin_reply_complaint' complaint.id %}">
+                <button class="btn btn-sm btn-primary me-2">Replay</button>
+            </a></td>
+            
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No complaints found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+{% endblock %}

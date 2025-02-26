@@ -1,0 +1,100 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Contact & Complaints</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact & Complaint Section -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <!-- Contact Information -->
+        <div class="col-lg-4">
+            <div class="contact_info card p-4 shadow-lg rounded-lg text-center" style="border: none;">
+                <h3 class="text-center font-weight-bold mb-4" style="color: #ff4500;">Contact us</h3>
+                <div class="info_item mb-3">
+                    <i class="lnr lnr-home" style="font-size: 24px; color: #ff4500;"></i>
+                    <h6>California, United States</h6>
+                    <p>Santa Monica Boulevard</p>
+                </div>
+                <div class="info_item mb-3">
+                    <i class="lnr lnr-phone-handset" style="font-size: 24px; color: #ff4500;"></i>
+                    <h6><a href="#" style="text-decoration: none; color: #ff4500;">+1 123 456 7890</a></h6>
+                    <p>Mon - Fri, 9 AM - 6 PM</p>
+                </div>
+                <div class="info_item">
+                    <i class="lnr lnr-envelope" style="font-size: 24px; color: #ff4500;"></i>
+                    <h6><a href="mailto:admin@website.com" style="text-decoration: none; color: #ff4500;">karma@website.com</a></h6>
+                    <p>Send us your query anytime!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-8">
+            <div class="card shadow-lg rounded-lg p-5" style="background: #f8f9fa; border-radius: 15px; border: none;">
+                <h3 class="text-center mb-4 font-weight-bold" style="color: #ff4500;">GET IN TOUCH</h3>
+                <form method="POST" action="{% url "submit_get_in_touch" %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control p-3" id="name" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control p-3" id="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control p-3" id="subject" name="subject" placeholder="Subject" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <textarea class="form-control p-3" name="message" id="message" rows="6" placeholder="Your Message" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-lg text-white px-5 py-2" style="background: #ff4500; border: none;">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Form Section -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card shadow-lg rounded-lg p-5" style="background: #fffaf0; border-radius: 15px; border: none;">
+                <h3 class="text-center mb-4 font-weight-bold" style="color: #ff4500;">HAVE ANY COMPLAINTS?</h3>
+                <form method="POST" action="{% url 'submit_complaint' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="subject" class="font-weight-bold">Complaint Subject:</label>
+                        <input type="text" id="subject" name="subject" class="form-control p-3" placeholder="Enter subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="font-weight-bold">Complaint Details:</label>
+                        <textarea id="message" name="message" class="form-control p-3" rows="6" placeholder="Describe your complaint" required></textarea>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-lg text-white px-5 py-2" style="background: #ff4500; border: none;">Submit Complaint</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

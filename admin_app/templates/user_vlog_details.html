@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <center><h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> USER VLOG DETAILS</h4></center>
+  
+    <!-- Simplified Table --> 
+    <div class="card">
+      <h5 class="card-header">Details</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>File</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <!-- Example Data Row -->
+            <tr>
+              <td>{{i.title}}</td>
+              <td>{{i.description}}</td>
+             
+              
+              <td>
+                {% if i.images.all %}
+                <img src="{{ i.images.first.image.url }}" alt="vlog_image" style="width: 110px; height: auto;">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+                          </td>
+            
+              <td>
+                <div class="d-flex">
+                  <a href="{% url 'view_user_vlogs' i.user_id.id %}">
+                    <button class="btn btn-sm btn-primary me-2">View More</button>
+                </a>
+                   <a href ="{% url "user_vlog_delete" i.id %}"><button class ="btn btn-sm btn-secondary me-2">delete</button></a>
+                  
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Simplified Table -->
+</div>
+
+
+{% endblock %}

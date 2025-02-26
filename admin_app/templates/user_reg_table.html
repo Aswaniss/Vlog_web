@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <center><h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> REGISTERED USERS</h4></center>
+  
+    <!-- Simplified Table -->
+    <div class="card">
+      <h5 class="card-header">Details</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Username</th>
+              <th>Email</th> 
+              <th>Password</th>
+              <th>Confirm password</th>
+              <th>Profile picture</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <!-- Example Data Row -->
+            <tr>
+              <td>{{i.firstname}}</td>
+              <td>{{i.lastname}}</td>
+              <td>{{i.username}}</td>
+              <td>{{i.email}}</td>
+              <td></td>
+              <td></td>
+              <td>
+                <img src="{{i.profile_picture.url}}" alt="default_img" style="width: 110px; height: auto;" >
+              </td>
+            
+              <td>
+                <div class="d-flex">
+                  <a href="{% url 'view_user_vlogs' i.id %}">
+                    <button class="btn btn-sm btn-primary me-2">View More</button>
+                </a>
+                  <a href ="{% url "form_delete" i.id %}"><button class ="btn btn-sm btn-secondary me-2">delete</button></a>
+                  
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Simplified Table -->
+</div>
+
+
+{% endblock %}

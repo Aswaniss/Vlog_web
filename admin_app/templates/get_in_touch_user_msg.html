@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <center><h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> USERS MESSAGES</h4></center>
+  
+    <!-- Simplified Table -->
+    <div class="card">
+      <h5 class="card-header"></h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+           
+<h3>User Messages</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Date Submitted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message.name }}</td>
+                <td>{{ message.email }}</td>
+                <td>{{ message.subject }}</td>
+                <td>{{ message.message }}</td>
+                <td>{{ message.created_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No messages found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+{% endblock %}

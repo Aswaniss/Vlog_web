@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <style>
+        /* Reset Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centering the Page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f9f9f9;
+        }
+
+        /* OTP Container */
+        .otp-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            border-top: 5px solid #ff8800;
+        }
+
+        /* Heading */
+        .otp-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* OTP Input */
+        .otp-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .otp-input:focus {
+            border-color: #ff8800;
+            box-shadow: 0 0 8px rgba(255, 136, 0, 0.5);
+        }
+
+        /* Submit Button */
+        .btn {
+            background: #ff8800;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #e67300;
+            box-shadow: 0 4px 10px rgba(230, 115, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .otp-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="otp-container"><br>
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert 
+                    {% if message.tags == 'success' %}alert-success
+                    {% elif message.tags == 'error' %}alert-danger
+                    {% elif message.tags == 'warning' %}alert-warning
+                    {% elif message.tags == 'info' %}alert-info
+                    {% endif %} 
+                    alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <br><br>
+        <h2>Enter OTP</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="otp" class="otp-input" placeholder="Enter OTP" required>
+            <button type="submit" class="btn">Verify</button>
+            
+        </form>
+        
+    </div>
+
+</body>
+</html>

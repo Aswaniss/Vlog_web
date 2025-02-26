@@ -1,0 +1,133 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>WANT TO UPDATE!</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Profile</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Update Form Area -->
+<section class="profile-update-area section_gap">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="update-form-wrapper shadow rounded p-4">
+                    <h3 class="text-center mb-4">Update Your Profile</h3>
+                    <form class="row login_form" action="{% url 'profile_update' user.id %}" method="POST" enctype="multipart/form-data" id="updateForm" novalidate="novalidate">
+                        {% csrf_token %}
+                        
+                        <!-- Profile Picture -->
+                        <div class="col-md-12 form-group">
+                            <label for="profile_picture" class="form-label">Profile Picture</label>
+                            <input type="file" class="form-control file-input" name="profile_picture" id="profile_picture" accept="image/*">
+                            <img src="{{ user.profile_picture.url }}" alt="Current Profile Picture" class="img-thumbnail mt-3" style="max-width: 150px;">
+                        </div>
+                        
+                        <!-- Other Fields -->
+                        <div class="col-md-6 form-group">
+                            <label for="firstname" class="form-label">Firstname</label>
+                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Firstname" value="{{ user.firstname }}" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="lastname" class="form-label">Lastname</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Lastname" value="{{ user.lastname }}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="{{ user.username }}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ user.email }}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ user.phone }}" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="phone" class="form-label">Password</label>
+                            <input type="text" class="form-control" name="password" id="phone" placeholder="password" value="{{ user.password }}" required>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="col-md-12 form-group text-center">
+                            <button type="submit" class="btn btn-update">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom CSS -->
+<style>
+    .profile-update-area {
+        background: #f8f9fa;
+        padding: 60px 0;
+    }
+
+    .update-form-wrapper {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .update-form-wrapper h3 {
+        font-size: 24px;
+        color: #333333;
+        font-weight: bold;
+    }
+
+    .form-label {
+        font-size: 14px;
+        color: #555555;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: rgb(243, 164, 18);
+        outline: none;
+        box-shadow: 0 0 5px rgba(243, 164, 18, 0.5);
+    }
+
+    .file-input {
+        padding: 8px;
+    }
+
+    .btn-update {
+        background-color: rgb(243, 164, 18);
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        color: #ffffff;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-update:hover {
+        background-color: rgb(0, 179, 155);
+        box-shadow: 0 4px 12px rgba(0, 179, 155, 0.3);
+    }
+</style>
+
+{% endblock %}

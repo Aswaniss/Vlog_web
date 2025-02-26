@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <center><h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> USER COMMENTS</h4></center>
+  
+    <!-- Simplified Table -->
+    <div class="card">
+      <h5 class="card-header"></h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Comments</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <!-- Example Data Row -->
+            <tr>
+              <td>{{i.message}}</td>
+    
+              <td>
+                <div class="d-flex">
+                  <a href = ""><button class="btn btn-sm btn-primary me-2">update</button></a>
+                  <a href ="{% url "comment_delete" i.id %}"><button class ="btn btn-sm btn-secondary me-2">delete</button></a>
+                  
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Simplified Table -->
+</div>
+
+
+{% endblock %}

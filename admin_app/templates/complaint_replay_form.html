@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> REPLAY TO COMPLAINTS</h4>
+  
+    <!-- Simplified Table -->
+    <div class="card">
+      <h5 class="card-header">User Complaints</h5>
+      <div class="table-responsive text-nowrap">
+        
+    <p><strong>Subject:</strong> {{ complaint.subject }}</p>
+    <p><strong>Message:</strong> {{ complaint.message }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="reply">Reply:</label>
+            <textarea id="reply" name="reply" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Submit Reply</button>
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}

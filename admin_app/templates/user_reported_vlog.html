@@ -1,0 +1,53 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+   <center>
+      <h4 class="fw-bold py-3 mb-4">Reported Vlogs</h4>
+   </center>
+
+   <div class="card">
+      <h5 class="card-header">Details</h5>
+      <div class="table-responsive text-nowrap">
+         <table class="table table-bordered table-hover">
+            <thead class="table-light">
+               <tr class="text-center">
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Reported By</th>
+                  <th>Reported At</th>
+                  <th>Actions</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for vlog in reported_vlogs %}
+               <tr class="align-middle">
+                  <td class="fw-semibold">{{ vlog.title }}</td>
+                  <td>{{ vlog.description|truncatewords:15 }}</td>
+                  <td>
+                     {% for report in vlog.reports.all %}
+                         ({{ report.reported_by.id }}) 
+                         <small class="text-muted">({{ report.reported_at|date:"d M, Y" }})</small><br>
+                     {% empty %}
+                         No reports
+                     {% endfor %}
+                 </td>
+                 
+                  <td class="text-center" style="font-size: 0.85rem; color: #666;">
+                     {{ vlog.created_at|date:"d M, Y" }}
+                  </td>
+                  <td class="text-center">
+                     <a href="{% url 'view_user_vlogs' vlog.id %}" class="btn btn-sm btn-outline-primary">View</a></td>
+                     <td><a href="{% url 'reported_vlog_delete' vlog.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                  </td>
+               </tr>
+               {% empty %}
+               <tr>
+                  <td colspan="5" class="text-center text-muted">No reported vlogs.</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+{% endblock %}

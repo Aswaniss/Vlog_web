@@ -1,0 +1,122 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Section -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1><strong>YOUR SAVED POSTS</strong></h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Saved Posts</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Saved Posts Section -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Saved Posts</h2>
+{% if saved_posts %}
+    <div class="row">
+        {% for saved in saved_posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-lg border-0">
+                    {% if saved.vlog.images.all %}
+                        <img 
+                            src="{{ saved.vlog.images.first.image.url }}" 
+                            class="card-img-top rounded-top" 
+                            alt="{{ saved.vlog.title }}" 
+                            style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <img 
+                            src="path/to/default-image.jpg" 
+                            class="card-img-top rounded-top" 
+                            alt="No image available" 
+                            style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate">{{ saved.vlog.title }}</h5>
+                        <p class="card-text text-truncate" style="max-height: 4.5em; overflow: hidden;">
+                            {{ saved.vlog.description }}
+                        </p>
+                        <a href="{% url 'detailed_social_vlog' saved.vlog.id %}" 
+                           class="btn btn-orange btn-sm">
+                           View Post
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center">
+        <p class="lead">You haven't saved any posts yet. Start exploring and save your favorite ones!</p>
+        <a href="{% url 'vlog_page' %}" class="btn btn-orange">Go to Home</a>
+    </div><br>
+{% endif %}
+
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    /* Button Styles */
+    .btn-orange {
+        background-color: #f3a412; /* Orange shade */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange:hover {
+        background-color: #ff9500; /* Darker orange */
+        box-shadow: 0 4px 8px rgba(255, 149, 0, 0.4);
+        transform: scale(1.05);
+    }
+
+    /* Card Hover Effect */
+    .card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Typography */
+    h2 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .card-text {
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* Empty State Centering */
+    .text-center p {
+        color: #777;
+        font-size: 16px;
+    }
+
+    .text-center .btn-orange {
+        margin-top: 20px;
+    }
+</style>
+
+{% endblock %}

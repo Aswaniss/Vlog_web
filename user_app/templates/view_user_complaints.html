@@ -1,0 +1,51 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Area -->
+ 
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Post a Vlog</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{% url 'vlog_post' %}">Post Vlog</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section> 
+
+<div class="container">
+    <h3>Your Complaints</h3>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Reply</th>
+                <th>Submitted On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.subject }}</td>
+                <td>{{ complaint.message }}</td>
+                <td>{{ complaint.is_resolved|yesno:"Resolved,Pending" }}</td>
+                <td>{{ complaint.reply.admin_reply|default:"No reply yet" }}</td>
+                <td>{{ complaint.created_at }}</td>
+                
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No complaints submitted yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

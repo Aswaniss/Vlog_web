@@ -1,0 +1,69 @@
+{% extends "vlog_page.html" %}
+{% block categories %}
+
+<!-- Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>COMPLAINTS AND REPLIES</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{% url 'home' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Complaints</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-center" style="color: black; border-radius: 5px;">
+            <h4>Your Complaints</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered align-middle text-center">
+                    <thead style="background-color: #ff9800; color: white;">
+                        <tr>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Reply</th>
+                            <th scope="col">Submitted On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in complaints %}
+                        <tr>
+                            <td>{{ complaint.subject }}</td>
+                            <td class="text-wrap" style="max-width: 300px;">{{ complaint.message }}</td>
+                            <td class="{% if complaint.is_resolved %}text-success{% else %}text-danger{% endif %}">
+                                {{ complaint.is_resolved|yesno:"Resolved,Pending" }}
+                            </td>
+                            <td>
+                                {% if complaint.complaintreply %}
+                                    <span class="text-success">{{ complaint.complaintreply.admin_reply }}</span>
+                                {% else %}
+                                    <span class="text-muted">No reply yet</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ complaint.created_at|date:"M d, Y h:i A" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info text-center mb-0" role="alert" style="background-color: #ffe0b2; color: #ff9800;">
+                                    You have not submitted any complaints yet.
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
